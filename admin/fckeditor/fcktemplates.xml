@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Templates imagesBasePath="fck_template/images/">
+	<Template title="2 Columns" image="template2.gif">
+		<Description>The header image with the main content in the left column and a secondary right column.</Description>
+		<Html>
+			<![CDATA[
+				<table cellspacing="0" cellpadding="0" width="100%" border="0">
+			        <tr>
+			            <td id="double-column-c1" valign="top">[Left Content Column]</td>
+			            <td id="double-column-c2" valign="top">[Right Content Column]</td>
+			        </tr>
+				</table>
+			]]>
+		</Html>
+	</Template>
+	<Template title="1 Column" image="template1.gif">
+		<Description>The header image and a single content column</Description>
+		<Html>
+			<![CDATA[
+				<table cellspacing="0" cellpadding="0" width="100%" border="0">
+			        <tr>
+			            <td id="single-column">[Content Column]</td>
+			        </tr>
+				</table>
+			]]>
+		</Html>
+	</Template>
+</Templates>

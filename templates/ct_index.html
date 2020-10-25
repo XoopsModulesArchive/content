@@ -1,0 +1,120 @@
+<{if $xoops_isadmin == 1 or $local_admin == 1}>
+	<style type="text/css">
+	<!--
+		.ct-adminoutline{
+			border:solid 1px #FC0;
+		}
+		
+		.ct-admintools{
+			opacity:.50;
+			filter:alpha(opacity=50);
+			background-color:#FC0;
+			position:absolute;
+			padding:10px;
+		}
+	-->
+	</style>
+	<script language="JavaScript">
+	<!--
+		function hide_ct_tools(toolsobj){
+			toolsobj.style.opacity = .50;
+			toolsobj.style.filter = 'alpha(opacity=' + 50 + ')';
+		}
+		
+		function show_ct_tools(toolsobj){
+			toolsobj.style.opacity = 1;
+			toolsobj.style.filter = 'alpha(opacity=' + 100 + ')';
+		}
+		
+		function openEditWindow(filePath){
+			editwin = window.open(filePath,'editwin','scrollbars=1,toolbars=0,statusbar=0,menubar=0,width=<{$edit_width}>,height=<{$edit_height}>'); 
+			editwin.moveTo(50,50); 
+			editwin.focus();
+		}
+		
+		function openDeleteWindow(filePath){
+			editwin = window.open(filePath,'editwin','scrollbars=1,toolbars=0,statusbar=0,menubar=0,width=400,height=200'); 
+			editwin.moveTo(50,50); 
+			editwin.focus();
+		}
+	//-->
+	</script>
+	<div class="ct-adminoutline">
+		<div class="ct-admintools" onmouseover="show_ct_tools(this)" onmouseout="hide_ct_tools(this)">
+			<{if $permit_edit == 1 or $xoops_isadmin == 1 or $permit_admin == 1}>
+				<{if $editpopup == 1 }>
+					<a href="" onclick="openEditWindow('<{$xoops_url}>/modules/content/admin/edit_content.php?id=<{$id}>&return=1&showshort=1');return false;">
+				<{else}>
+					<a href="<{$xoops_url}>/modules/content/admin/edit_content.php?id=<{$id}>&return=1">
+				<{/if}>
+				<img src="<{$xoops_url}>/modules/content/images/edit.png" alt="Edit" height="16" width="16" ></a><{/if}>
+			<{if $permit_add == 1 or $xoops_isadmin == 1 or $permit_admin == 1}>
+				<{if $editpopup == 1 }>
+					<a href="" onclick="openEditWindow('<{$xoops_url}>/modules/content/admin/add_content.php?id=<{$id}>&return=1&showshort=1');return false;">
+				<{else}>
+					<a href="<{$xoops_url}>/modules/content/admin/add_content.php?id=<{$id}>&return=1">
+				<{/if}><img src="<{$xoops_url}>/modules/content/images/add.png" alt="Add" height="16" width="16" ></a><{/if}>
+			<{if $permit_admin == 1 or $xoops_isadmin == 1}>
+				<{if $editpopup == 1 }>
+					<a href="" onclick="openEditWindow('<{$xoops_url}>/modules/content/admin/copy_content.php?id=<{$id}>&return=1&showshort=1');return false;">
+				<{else}>
+					<a href="<{$xoops_url}>/modules/content/admin/copy_content.php?id=<{$id}>&return=1">
+				<{/if}><img src="<{$xoops_url}>/modules/content/images/copy.png" alt="Copy" height="16" width="16" ></a>
+			<a href="" onclick="openDeleteWindow('<{$xoops_url}>/modules/content/admin/delete_content.php?id=<{$id}>&return=1&showshort=1');return false;"><img src="<{$xoops_url}>/modules/content/images/delete.png" alt="Delete" height="16" width="16" ></a><{/if}></div><{/if}>
+<table border=0 cellpadding=0 cellspacing=0 width="100%">
+	<{if $breadcrumbs}>
+	<tr>
+		<td><{foreach name=crumbs item=crumb from=$breadcrumbs}><{if !$smarty.foreach.crumbs.last }><a href="index.php?id=<{$crumb.storyid}>"><{/if}><{$crumb.title}><{if !$smarty.foreach.crumbs.last }></a><{/if}><{if !$smarty.foreach.crumbs.last }>&nbsp;|&nbsp;<{/if}><{/foreach}></td>
+	</tr>
+	<{/if}>
+	<tr>
+		<td class="blockTitle">
+		<{if $header_image neq ''}>
+			<img src="<{$xoops_url}>/modules/content/headers/<{$header_image}>">
+		<{else}>
+			<{$title}>
+		<{/if}>
+		</td>
+	</tr>
+	<tr>
+		<td class="blockContent">
+     	<{$content}><br><br>
+		<{$date}>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+		<{if $nav neq ''}>
+			<div class="nav" align="right">
+				Page&nbsp;<{$nav}>
+			</div>
+		<{/if}>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
+					<a href="print.php?id=<{$id}>" target="_new"><img src="<{$xoops_url}>/modules/content/images/print.png" alt="" border="0" align="absmiddle"></a>&nbsp;
+					<a href="<{$mail_link}>"><img src="<{$xoops_url}>/modules/content/images/email.png" alt="" border="0" align="absmiddle"></a>
+					
+	 </td>
+	</tr>
+</table>
+<{if $xoops_isadmin == 1 or $local_admin == 1}></div><{/if}>
+<{if $nocomments == 0}>
+<br><br>
+<div style="text-align: center; padding: 3px; margin: 3px;">
+  <{$commentsnav}>
+  <{$lang_notice}>
+</div> 
+<div style="margin: 3px; padding: 3px;">
+<!-- start comments loop -->
+<{if $comment_mode == "flat"}>
+  <{include file="db:system_comments_flat.html"}>
+<{elseif $comment_mode == "thread"}>
+  <{include file="db:system_comments_thread.html"}>
+<{elseif $comment_mode == "nest"}>
+  <{include file="db:system_comments_nest.html"}>
+<{/if}>
+<!-- end comments loop -->
+</div>
+<{/if}>
